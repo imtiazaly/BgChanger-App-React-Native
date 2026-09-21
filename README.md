@@ -1,97 +1,133 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# 🎨 BgChanger - React Native App
 
-# Getting Started
+A sleek, dynamic, and interactive React Native application that changes screen background colors and randomly spawns dynamic geometric shapes (squares and circles) with random positioning and custom border styling upon every button interaction.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+Developed as part of a **Mobile App Development & React Native Learning Series**.
 
-## Step 1: Start Metro
+---
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## 📱 App Screenshots / Demo Preview
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+| Preview 1 | Preview 2 | Preview 3 |
+| :---: | :---: | :---: |
+| <img src="./assets/bg1.PNG" width="250" alt="BgChanger Preview 1" /> | <img src="./assets/bg2.PNG" width="250" alt="BgChanger Preview 2" /> | <img src="./assets/bg3.PNG" width="250" alt="BgChanger Preview 3" /> |
 
-```sh
-# Using npm
-npm start
+---
 
-# OR using Yarn
-yarn start
+## ✨ Key Features
+
+- 🎲 **Dynamic HEX Color Generator**: Generates clean, random 6-digit HEX color codes for screen backgrounds on every click.
+- 📐 **Random Geometric Shapes**: Automatically calculates and renders a random count (1–10) of both square boxes and circular shapes.
+- 📍 **Screen-Aware Placement**: Dynamically calculates screen dimensions using React Native `Dimensions` API to keep shapes within visible screen boundaries.
+- 🎨 **Unique Styling per Shape**: Each spawned shape receives its own randomized background color and contrasting border color.
+- ⚡ **Lightweight & High Performance**: Built with pure React Native state management and TypeScript for fast state transitions and type safety.
+- 📱 **Safe Area & Theme Integration**: Fully compatible with iOS/Android safe area insets and status bar color updates.
+
+---
+
+## 🛠️ Tech Stack & Tools
+
+- **Framework**: [React Native](https://reactnative.dev/) (v0.87.1)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **UI Components**: React Native Core (`View`, `Text`, `TouchableOpacity`, `Dimensions`, `StatusBar`), `react-native-safe-area-context`
+- **Build Tools**: Metro Bundler, Babel, ESLint, Prettier
+
+---
+
+## 🚀 Getting Started
+
+Follow these instructions to set up and run the application on your local machine or emulator.
+
+### Prerequisites
+
+Ensure you have your React Native development environment configured:
+- **Node.js**: `>= 22.11.0`
+- **npm** or **yarn**
+- **Android Studio** (for Android Emulator / physical device) or **Xcode** (macOS only, for iOS Simulator)
+
+### Installation
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/imtiazaly/BgChanger-App-React-Native.git
+   cd BgChanger-App-React-Native
+   ```
+
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start Metro Bundler**
+   ```bash
+   npm start
+   ```
+
+4. **Run the App**
+   - **Android**:
+     ```bash
+     npm run android
+     ```
+   - **iOS**:
+     ```bash
+     cd ios && pod install && cd ..
+     npm run ios
+     ```
+
+---
+
+## 🧠 Logic & Architecture Highlights
+
+### 1. HEX Color Generation
+Uses standard HEX character set (`0123456789ABCDEF`) to produce random color strings:
+```typescript
+const generateRandomColor = () => {
+  const hexRange = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += hexRange[Math.floor(Math.random() * 16)];
+  }
+  return color;
+};
 ```
 
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+### 2. Screen-Aware Shape Positioning
+Calculates valid X and Y coordinates based on `SCREEN_WIDTH` and `SCREEN_HEIGHT` minus shape dimensions offset to keep elements visible:
+```typescript
+const generateRandomPosition = () => {
+  const shapeSize = 100;
+  const x = Math.floor(Math.random() * (SCREEN_WIDTH - shapeSize));
+  const y = Math.floor(Math.random() * (SCREEN_HEIGHT - shapeSize));
+  return { x, y };
+};
 ```
 
-### iOS
+---
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+## 📂 Project Structure
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
+```text
+BgChanger-App-React-Native/
+├── assets/                  # App preview screenshots (bg1.PNG, bg2.PNG, bg3.PNG)
+├── App.tsx                  # Core app logic & UI layout
+├── index.js                 # App entry point
+├── package.json             # Project dependencies and scripts
+├── tsconfig.json            # TypeScript configuration
+└── README.md                # Project documentation
 ```
 
-Then, and every time you update your native dependencies, run:
+---
 
-```sh
-bundle exec pod install
-```
+## 👨‍💻 Learning Objectives
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+This project was built to explore and master essential React Native concepts:
+- Managing complex React state (`useState`) with TypeScript object arrays.
+- Screen dimension calculation and absolute positioning in React Native.
+- Touch handlers (`TouchableOpacity`) and dynamic inline styling.
+- GitHub portfolio structure and documentation best practices.
 
-```sh
-# Using npm
-npm run ios
+---
 
-# OR using Yarn
-yarn ios
-```
+## 📄 License
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+This project is open-source and available under the [MIT License](LICENSE).
